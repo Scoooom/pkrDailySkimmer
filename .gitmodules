@@ -1,0 +1,4 @@
+[submodule "pokerogue"]
+	path = pokerogue
+	url = https://github.com/pagefaultgames/pokerogue.git
+	branch = main
