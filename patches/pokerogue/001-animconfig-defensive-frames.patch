@@ -1,0 +1,27 @@
+diff --git a/src/data/battle-anims.ts b/src/data/battle-anims.ts
+index 101835f402..758fbc4b90 100644
+--- a/src/data/battle-anims.ts
++++ b/src/data/battle-anims.ts
+@@ -32,7 +32,12 @@ export class AnimConfig {
+     if (source) {
+       this.id = source.id;
+       this.graphic = source.graphic;
+-      const frames: any[][] = source.frames;
++      // NOTE(pkr-daily-skimmer): defensive fallback to [] added for headless
++      // simulation, where battle-anims/*.json assets aren't served (no dev
++      // server). Without this, a source object missing .frames (e.g. an
++      // AnimConfig previously constructed with no data at all) crashes here
++      // instead of producing a harmless empty animation.
++      const frames: any[][] = source.frames ?? [];
+       frames.map(animFrames => {
+         for (let f = 0; f < animFrames.length; f++) {
+           animFrames[f] = new ImportedAnimFrame(animFrames[f]);
+@@ -40,7 +45,7 @@ export class AnimConfig {
+       });
+       this.frames = frames;
+ 
+-      const frameTimedEvents = source.frameTimedEvents;
++      const frameTimedEvents = source.frameTimedEvents ?? {};
+       for (const fte of Object.keys(frameTimedEvents)) {
+         const timedEvents: AnimTimedEvent[] = [];
+         for (const te of frameTimedEvents[fte]) {
