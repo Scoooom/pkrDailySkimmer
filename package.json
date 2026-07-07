@@ -1,0 +1,21 @@
+{
+  "name": "pkr-daily-skimmer",
+  "version": "0.2.0",
+  "description": "PokeRogue daily seed headless runner — produces solo-run guides",
+  "type": "module",
+  "scripts": {
+    "run": "tsx runner/cli.ts"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
+    "@types/node": "^20.0.0",
+    "@vitest/coverage-v8": "^4.1.9",
+    "crypto-js": "^4.2.0",
+    "jsdom": "^29.1.1",
+    "msw": "^2.14.6",
+    "tsx": "^4.23.0",
+    "typescript": "^5.4.0",
+    "vitest": "^4.1.9",
+    "vitest-canvas-mock": "^1.1.4"
+  }
+}

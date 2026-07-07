@@ -1,0 +1,10 @@
+{
+  "extends": "./pokerogue/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./pokerogue",
+    "rootDir": ".",
+    "noEmit": true,
+    "allowImportingTsExtensions": true
+  },
+  "include": ["runner/**/*.ts", "pokerogue/**/*.ts"]
+}
