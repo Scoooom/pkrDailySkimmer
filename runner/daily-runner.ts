@@ -168,6 +168,11 @@ export class DailyRunner {
       isBoss: p.isBoss(),
     }));
 
+    process.stderr.write(
+      `[wave ${wave}/${MAX_WAVE}] ${waveType} in ${biome}` +
+      `${isDouble ? " (double)" : ""} vs ${encounters.map(e => `${e.species} Lv${e.level}`).join(", ")}\n`,
+    );
+
     const turns: TurnAction[] = [];
     let turnCount = 0;
     let caughtInfo: WaveGuide["caught"] | undefined;
@@ -214,6 +219,13 @@ export class DailyRunner {
     } else if (wave < MAX_WAVE) {
       waveGuide.itemScreen = await this.handleItemScreen(wave);
     }
+
+    const outcome = caughtInfo
+      ? `caught ${caughtInfo.species} in ${caughtInfo.ballsUsed} ball(s)`
+      : "won";
+    process.stderr.write(
+      `[wave ${wave}/${MAX_WAVE}] done — ${outcome}, HP ${Math.round(runnerHpPercent * 100)}%, Lv${runnerLevel}, ₽${this.game.scene.money}\n`,
+    );
 
     return waveGuide;
   }

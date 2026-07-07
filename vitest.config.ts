@@ -136,7 +136,13 @@ export default defineConfig(async config => {
       ],
       include: ["runner/**/*.test.ts"],
       isolate: false,
-      restoreMocks: true,
+      // restoreMocks is deliberately OFF: each candidate runs as exactly
+      // one test in its own process (see runner/candidate-orchestrator.ts),
+      // so there's never a "next test" to protect from mock leakage. Left
+      // on, vitest's internal beforeEach silently undoes the console
+      // suppression installed in runner/setup.ts before the actual run
+      // even starts, flooding output with pokerogue's internal debug logs.
+      restoreMocks: false,
       watch: false,
       testTimeout: 60 * 60 * 1000, // 1 hour — full 50-wave run across up to 4 candidates
       env: {
