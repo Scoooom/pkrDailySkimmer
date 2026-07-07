@@ -39,6 +39,13 @@ log "Cloning pokerogue ($POKEROGUE_BRANCH)"
 git clone --branch "$POKEROGUE_BRANCH" --single-branch "$POKEROGUE_REPO" "$POKEROGUE_DIR" \
   || fail "git clone failed — check your network connection"
 
+# pokerogue has two submodules: "locales" (small, needed — the i18n mock
+# reads real files from locales/en/*.json) and "assets" (sprites/audio,
+# large, NOT needed for headless simulation). Initialize only "locales".
+log "Initializing locales submodule (skipping assets)"
+git -C "$POKEROGUE_DIR" submodule update --init -- locales \
+  || fail "git submodule update failed for locales"
+
 POKEROGUE_COMMIT="$(git -C "$POKEROGUE_DIR" rev-parse --short HEAD)"
 info "pokerogue is at commit $POKEROGUE_COMMIT"
 
